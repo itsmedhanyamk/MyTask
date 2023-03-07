@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+<!--    <a class="navbar-brand" href="#">Navbar</a>-->
+<!--    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--      <span class="navbar-toggler-icon"></span>-->
+<!--    </button>-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Cntact Us</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Branches
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" target="_blank" href="https://en.wikipedia.org/wiki/Kasaragod_district">Kasaragod</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" target="_blank" href="https://en.wikipedia.org/wiki/Kannur_district">Kannur</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" target="_blank" href="https://en.wikipedia.org/wiki/Wayanad_district">Wayanad</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" target="_blank" href="https://en.wikipedia.org/wiki/Kozhikode_district">Kozhikode</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" target="_blank" href="https://en.wikipedia.org/wiki/Malappuram_district">Malappuram</a></li>
+          </ul>
+        </li>
+      </ul>
+      {% if user.is_authenticated %}
+        <form class="d-flex" role="search">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">Hello {{ user.username }}</li>
+            <li class="nav-item"><a class="btn btn-outline-success form-control me-2" href="credentials/user_details">Update Details</a></li>
+            <li class="nav-item"><a class="btn btn-outline-success form-control me-2" href="credentials/logout">Logout</a></li>
+          </ul>
+        </form>
+      {% else %}
+        <form class="d-flex" role="search">
+          <a href="credentials/login" class="btn btn-outline-success form-control me-2">Login</a>
+          <a href="credentials/register" class="btn btn-outline-success" >Register</a>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</nav>

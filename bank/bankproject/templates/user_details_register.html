@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+</head>
+<body style="background: #aec5eb;">
+<h1>Registration Form</h1>
+<form method="post" action="" >
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Name"><br>
+    <input type="date" name="dob" placeholder="DOB"><br>
+    <input type="text" name="age" placeholder="Age"><br>
+    <p>Gender:</p>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">Male</label><br>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Female</label><br>
+    <input type="text" name="phno" placeholder="Ph No"><br>
+    <input type="email" name="mail" placeholder="Mail Id"><br>
+    <input type="text" name="address" placeholder="Address"><br>
+    <label for="account">District</label><br>
+    <select id="question-district" name="district">
+        <option selected disabled>Choose a District</option>
+        {% for d in districts %}
+            <option value="{{ d.id }}">{{ d.name }}</option>
+        {% endfor %}
+    </select><br>
+    <label for="account">Branches</label><br>
+    <select id="question-branches" name="branch">
+        <option selected disabled>Choose a Branch</option>
+    </select><br>
+    <label for="account">Account Type</label><br>
+    <select name="account" id="account">
+        <option selected disabled>Choose a Type</option>
+        <option value="savings">Savings</option>
+        <option value="current">Current</option>
+    </select><br>
+    <label>Materials provide</label><br>
+    <input type="checkbox" id="debit" name="checks[]" value="debit">
+    <label for="debit"> Debit Card</label><br>
+    <input type="checkbox" id="credit" name="checks[]" value="credit">
+    <label for="credit"> Credit Card</label><br>
+    <input type="checkbox" id="cheque" name="checks[]" value="cheque">
+    <label for="cheque">Cheque Book</label><br>
+    <input type="submit">
+</form>
+{% if messages %}
+    {% for msg in messages %}
+        <h2>{{msg}}</h2>
+    {% endfor %}
+    <a href="{% url 'index' %}" style="background-color: blue;" >OK......</a>
+{% endif %}
+</body>
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script>
+    $("#question-district").change(function () {
+        const districtId = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: '{% url "get_branches_ajax" %}',
+            data: {
+                'dist_id': districtId,
+                'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (data) {
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (data) {
+                    html_data += `<option value="${data.id}">${data.bname}</option>`
+                });
+                $("#question-branches").html(html_data);
+            }
+        });
+    });
+</script>
+{% endblock javascript %}
+
+</html>
